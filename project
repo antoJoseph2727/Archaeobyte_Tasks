@@ -9,6 +9,11 @@
       font-family: 'Arial', sans-serif;
       text-align: center;
       margin: 50px;
+      background-color: #f2f2f2;
+    }
+
+    h1 {
+      color: #333;
     }
 
     .board {
@@ -16,6 +21,11 @@
       grid-template-columns: repeat(3, 100px);
       grid-gap: 5px;
       margin: 20px auto;
+      border: 5px solid #333;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
     }
 
     .cell {
@@ -24,6 +34,28 @@
       border: 2px solid #333;
       font-size: 2em;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s;
+    }
+
+    .cell:hover {
+      background-color: #eee;
+    }
+
+    .x {
+      color: #2196F3;
+    }
+
+    .o {
+      color: #FF5722;
+    }
+
+    #result {
+      color: #333;
+      font-size: 1.5em;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -50,10 +82,17 @@
     function handleClick(index) {
       if (board[index] === '' && gameActive) {
         board[index] = currentPlayer;
-        document.getElementById('board').children[index].textContent = currentPlayer;
+        updateCell(index);
         checkWinner();
         togglePlayer();
       }
+    }
+
+    function updateCell(index) {
+      const cell = document.getElementById('board').children[index];
+      cell.textContent = currentPlayer;
+      cell.classList.add(currentPlayer.toLowerCase());
+      cell.style.pointerEvents = 'none';
     }
 
     function checkWinner() {
